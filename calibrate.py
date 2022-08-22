@@ -13,7 +13,7 @@ if __name__ == '__main__':
     parser.add_argument('out',nargs="?",help='output calibration yaml file')
     parser.add_argument('--debug_dir',nargs="?", help='path to directory where images with detected chessboard will be written',
                         default='./pictures')
-    parser.add_argument('--output_dir',nargs="?",help='path to directory where calibration files will be saved.',default='./calibrationFiles')
+    parser.add_argument('--output_dir',nargs="?",help='path to directory where calibration files will be saved.',default='./calibrationfiles')
     parser.add_argument('-c', '--corners',nargs="?", help='output corners file', default=None)
     parser.add_argument('-fs', '--framestep',nargs="?", help='use every nth frame in the video', default=20, type=int)
     parser.add_argument('--height',nargs="?", help='Height in pixels of the image',default=480,type=int)
