@@ -1,3 +1,6 @@
+# VIDEO LINK!!!
+https://youtu.be/EBr9OlxyP9c
+
 # Raspberry-pi-Camera-Calibration--PYTHON
 
 
