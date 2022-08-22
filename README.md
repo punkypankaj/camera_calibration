@@ -6,7 +6,7 @@
 
 1. Enable the camera option in rpi config 
 
-    $ sudo raspi-config
+   $ sudo raspi-config
 
 
 Now reboot
