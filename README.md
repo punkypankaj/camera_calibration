@@ -28,7 +28,7 @@ Now reboot
      $ git clone https://github.com/jacksonliam/mjpg-streamer
 
 
-4.Now get in the mjpeg stream at the home location
+4. Now get in the mjpeg stream at the home location
 
      $ cd mjpg-streamer
      $ cd mjpg-streamer-experimental
@@ -52,7 +52,7 @@ next is to install imutils which will  help to increase the speed up of the pyth
      $ sudo pip install imutils
 
 
-8. Now open any editor like vi or nano im using nano
+8. Now open any editor like vi or nano 
 
      $ sudo nano /usr/local/lib/python2.7/dist-packages/imutils/video/webcamvideostream.py
      
@@ -83,10 +83,10 @@ save and exit
 
 after this run the caliberate.py executable file
 
-    $ python calibration.py --mm 22 --width 640 --height 480
+    $ python calibrate.py --mm 26 --width 640 --height 480
 
 
-'22' is he size of the marker block  640 480 are strictly adviced to use with this particulat setup
+'26' is he size of the marker block  640 480 are strictly adviced to use with this particulat setup
 
 
 
