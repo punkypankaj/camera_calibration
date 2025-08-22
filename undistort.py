@@ -1,38 +1,33 @@
-#!/usr/bin/env python
-import numpy as np
+#!/usr/bin/env python3
+import sys
+from pathlib import Path
 import cv2
-import os
-import argparse
 import yaml
-from glob import glob
+import numpy as np
 
-if __name__ == '__main__':
+yaml_path = sys.argv[1] if len(sys.argv) > 1 else "calibrationfiles/calibration_matrix.yaml"
 
-    parser = argparse.ArgumentParser(description='Undistort images based on camera calibration.')
-    parser.add_argument('calibration', help='input video file')
-    parser.add_argument('input_mask', help='input mask')
-    parser.add_argument('out', help='output directory')
-    args = parser.parse_args()
+with open(yaml_path, "r") as f:
+    data = yaml.safe_load(f)
 
-    with open(args.calibration) as fr:
-        c = yaml.load(fr)
+mtx  = np.array(data["camera_matrix"], dtype="float32")
+dist = np.array(data["dist_coeff"], dtype="float32")
+w, h = int(data["image_width"]), int(data["image_height"])
 
-    for fn in glob(args.input_mask):
-        print 'processing %s...' % fn,
-        img = cv2.imread(fn)
-        if img is None:
-            print("Failed to load " + fn)
-            continue
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
 
-        K_undistort = np.array(c['camera_matrix'])
-        # K_undistort[0:2, 2] = [0., 0.]
-        # K_undistort[0, 0] *= 0.3
-        # K_undistort[1, 1] *= 0.3
-        img_und = cv2.undistort(img, np.array(c['camera_matrix']), np.array(c['dist_coefs']),
-                                newCameraMatrix=K_undistort)
-        name, ext = os.path.splitext(os.path.basename(fn))
-        cv2.imwrite(os.path.join(args.out, name + '_und' + ext), img_und)
+new_mtx, _ = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
 
-        print 'ok'
+while True:
+    ok, frame = cap.read()
+    if not ok:
+        break
+    und = cv2.undistort(frame, mtx, dist, None, new_mtx)
+    cv2.imshow("undistorted (press q to quit)", und)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
-
+cap.release()
+cv2.destroyAllWindows()
